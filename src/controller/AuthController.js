@@ -61,7 +61,7 @@ const logoutUser = (req, res) => {
             return res.status(500).json({ message: 'Falha ao sair.' });
         }
         res.clearCookie('connect.sid'); // Limpar o cookie da sessão
-        return res.status(200).json({ message: 'Login bem-sucedido!' });
+        return res.status(200).json({ message: 'Desconectado com sucesso!' });
     });
 };
 

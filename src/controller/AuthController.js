@@ -12,9 +12,9 @@ const isAuthenticated = (req, res, next) => {
 };
 
 const registerUser = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!username || !password) {
+    if (!username || !email || !password) {
         return res.status(400).json({ message: 'Nome de usuário e senha são obrigatórios.' });
     }
 
@@ -23,8 +23,12 @@ const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).json({ message: 'O nome de usuário já existe. Escolha outro.' });
         }
+        const existingEmail = await User.findOne({ where: { email } });
+        if (existingEmail) {
+            return res.status(409).json({ message: 'O email já está em uso. Escolha outro.' });
+        }
 
-        await User.create({ username, password });
+        await User.create({ username, email, password });
         return res.status(201).json({ message: 'Cadastro realizado com sucesso! Agora você pode fazer login.' });
     } catch (error) {
         console.error("Erro ao registrar usuário:", error);

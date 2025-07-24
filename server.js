@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
 const { connectToDb, sequelize } = require('./src/database/db'); // Importar sequelize
 const User = require('./src/model/User'); // Importe o modelo do usuário para garantir que ele seja carregado para sequelize.sync()
@@ -10,6 +11,7 @@ const port = process.env.PORT || 3001;
 
 // Middleware para analisar corpos JSON (para solicitações de API)
 app.use(express.json());
+app.use(cors());
 // Middleware para analisar corpos codificados em URL (para dados de formulário, se usados)
 app.use(express.urlencoded({ extended: true }));
 
